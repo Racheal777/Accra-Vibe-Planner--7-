@@ -35,6 +35,8 @@ export type MustHave =
   | 'Outdoor seating'
   | 'Easy parking'
   | 'Reservation not required'
+  | 'Kid-friendly'
+  | 'Wheelchair access'
   | '';
 
 export type Location = {
@@ -56,6 +58,7 @@ export interface HangoutParams {
   groupSize?: number;
   travelPreference?: TravelPreference;
   mustHaves?: MustHave[];
+  openNowOnly?: boolean;
 }
 
 export interface SavedPlan {

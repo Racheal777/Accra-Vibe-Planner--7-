@@ -23,7 +23,7 @@ const commonInstructions = `
 `;
 
 export async function generatePlanOptions(params: HangoutParams): Promise<string> {
-    const { vibe, timeWindow, budget, audience, location, proximity, timing, dateMeal, specificDateTime, groupSize, travelPreference, mustHaves, planningMode } = params;
+    const { vibe, timeWindow, budget, audience, location, proximity, timing, dateMeal, specificDateTime, groupSize, travelPreference, mustHaves, planningMode, openNowOnly } = params;
 
     const vibeExplanation: Record<Vibe, string> = {
       'Relax & Unwind': "This means the user wants a low-key, calm experience. Think quiet cafes, library visits, spa days, or just a cheap and chill hangout.",
@@ -72,6 +72,9 @@ export async function generatePlanOptions(params: HangoutParams): Promise<string
     } else if (timing === 'Sometime This Week') {
         timingInstruction = `Crucial Context: The user wants to go 'Sometime This Week'. The plan should include forward-looking advice. For instance, the "Pro-Tip" should contain information relevant to planning ahead, such as "It's best to book a table for weekend evenings" or "Check their Instagram page for live music schedules before you go."`;
     }
+    if (openNowOnly) {
+      timingInstruction += ' Additional hard constraint: prioritize venues that are open at the intended time and explicitly avoid places with uncertain opening status.';
+    }
     
     const dateMealInstruction = vibe === 'Romantic Date' && dateMeal ? `- Date Meal: It's for ${dateMeal}.` : '';
   
@@ -115,12 +118,13 @@ export async function generatePlanOptions(params: HangoutParams): Promise<string
       - Plan Mode: ${planningMode || 'detailed'}
       - Travel Preference: ${travelPreference || 'Any distance'}
       - Must-Haves: ${(mustHaves && mustHaves.length > 0) ? mustHaves.join(', ') : 'None'}
+      - Open Now Only: ${openNowOnly ? 'Yes' : 'No'}
       ${dateMealInstruction}
       - User's general area: Near latitude ${location?.latitude}, longitude ${location?.longitude}
   
       For each of the two options, provide the following:
       1. The specific name of the main venue or location for the plan.
-      2. A publicly accessible, high-quality, royalty-free image URL representing the plan. Use your search capabilities to find a real photograph of the suggested venue or one that accurately represents the activity (e.g., from Unsplash, Pexels, or Google Images with usage rights). Prioritize real photos of the location. If a good, royalty-free image cannot be found, leave this field empty.
+      2. A publicly accessible, high-quality, royalty-free image URL representing the plan. Use your search capabilities to find a real photograph of the suggested venue or one that accurately represents the activity (e.g., from Unsplash, Pexels, or Google Images with usage rights). Prioritize real photos of the location. If a good, royalty-free image cannot be found OR if the URL is uncertain, leave this field empty.
       3. The Vibe Category for the plan, which MUST be one of the following: "Relax & Unwind", "Food & Nightlife", "Rich Kids Sports", "Active & Adventure", "Movies & Plays", "Romantic Date", "Picnic & Parks".
       4. A specific, searchable location for the venue. This must be a full address or a well-known landmark name that can be accurately found on Google Maps (e.g., "Republic Bar & Grill, Osu, Accra" or "Kwame Nkrumah Memorial Park & Mausoleum"). Do NOT just provide a general neighborhood.
       5. The Google Maps rating (e.g., "Rating: 4.5/5 stars"). If unavailable, state "Rating: Not available".

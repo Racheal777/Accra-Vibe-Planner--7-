@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Location, Timing } from '../../types';
 import { CurrentLocationIcon } from '../Icons';
-import { formatIntendedTime } from '../../utils/dateTime';
+import { formatIntendedTime, formatPlanningDateTime, normalizeTimeInput, TIME_SHORTCUTS } from '../../utils/dateTime';
 
 interface LocationInputProps {
   initialIntendedTime?: string;
@@ -15,10 +15,15 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
     const [originCoords, setOriginCoords] = useState<Location>(null);
     const [intendedTime, setIntendedTime] = useState<string>('');
     const [userOriginError, setUserOriginError] = useState<string | null>(null);
+    const [timeError, setTimeError] = useState<string | null>(null);
     const [isGettingCurrentLocation, setIsGettingCurrentLocation] = useState(false);
 
     useEffect(() => {
-        setIntendedTime(formatIntendedTime(initialIntendedTime, timing));
+        if (initialIntendedTime) {
+          setIntendedTime(initialIntendedTime);
+        } else {
+          setIntendedTime(formatIntendedTime(initialIntendedTime, timing));
+        }
     }, [initialIntendedTime, timing]);
 
     const handleUseCurrentLocation = () => {
@@ -48,8 +53,13 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
     };
 
     const handleSubmit = () => {
+        if (!intendedTime.trim()) {
+          setTimeError('Pick a time to continue.');
+          return;
+        }
+        setTimeError(null);
         const fallbackOrigin = originCoords ? 'My current location' : '';
-        onSubmit((userOrigin.trim() || fallbackOrigin), originCoords, intendedTime.trim());
+        onSubmit((userOrigin.trim() || fallbackOrigin), originCoords, normalizeTimeInput(intendedTime.trim()));
     }
 
     return (
@@ -94,7 +104,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
                         <p className="text-xs text-[#660B05]/80 dark:text-slate-400 mt-1.5 px-1">For best results, enter a specific landmark or full address.</p>
                         {originCoords && (
                           <p className="text-xs text-green-700 dark:text-green-400 mt-1.5 px-1 font-semibold">
-                            Current location captured. You can leave the field as-is.
+                            Using GPS location. You can leave the field as-is.
                           </p>
                         )}
                         {userOriginError && <p className="text-sm text-red-600 dark:text-red-400 mt-1.5 px-1">{userOriginError}</p>}
@@ -110,21 +120,39 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
                            className="w-full px-4 py-3 border-2 border-[#8C1007]/50 dark:border-[#E18C44]/50 bg-transparent dark:bg-slate-700/50 rounded-lg focus:ring-2 focus:ring-[#8C1007] dark:focus:ring-[#E18C44] focus:border-[#8C1007] dark:focus:border-[#E18C44] outline-none transition text-[#3E0703] dark:text-slate-100 placeholder:text-[#660B05]/70 dark:placeholder:text-slate-400"
                         />
                         <div className="flex gap-2 mt-2 flex-wrap">
-                          {['Right now', 'In 1 hour', 'Tonight 7 PM'].map((label) => (
+                          {TIME_SHORTCUTS.map((label) => (
                             <button
                               key={label}
-                              onClick={() => setIntendedTime(label)}
+                              onClick={() => {
+                                setIntendedTime(label);
+                                setTimeError(null);
+                              }}
                               className="text-xs px-3 py-1 rounded-full bg-[#8C1007]/10 dark:bg-[#E18C44]/20 text-[#660B05] dark:text-slate-300 border border-[#8C1007]/20 dark:border-[#E18C44]/30 hover:bg-[#8C1007]/20 dark:hover:bg-[#E18C44]/30"
                             >
                               {label}
                             </button>
                           ))}
+                          {initialIntendedTime && (
+                            <button
+                              onClick={() => {
+                                setIntendedTime(initialIntendedTime);
+                                setTimeError(null);
+                              }}
+                              className="text-xs px-3 py-1 rounded-full bg-white dark:bg-slate-700 text-[#660B05] dark:text-slate-300 border border-[#8C1007]/20 dark:border-[#E18C44]/30 hover:bg-[#8C1007]/10 dark:hover:bg-[#E18C44]/20"
+                            >
+                              Use plan time
+                            </button>
+                          )}
                         </div>
+                        <p className="text-xs text-[#660B05]/80 dark:text-slate-400 mt-1">
+                          Planning for: {formatPlanningDateTime(normalizeTimeInput(intendedTime)) || 'Not selected'}
+                        </p>
+                        {timeError && <p className="text-sm text-red-600 dark:text-red-400 mt-1.5 px-1">{timeError}</p>}
                     </div>
                 </div>
                 <button
                    onClick={handleSubmit}
-                   disabled={(!userOrigin.trim() && !originCoords) || !intendedTime.trim()}
+                   disabled={(!userOrigin.trim() && !originCoords)}
                    className="w-full mt-8 py-3 px-6 bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900 font-bold rounded-lg shadow-md hover:bg-[#660B05] dark:hover:bg-[#f3a469] disabled:bg-[#8C1007]/50 dark:disabled:bg-[#E18C44]/50 transition-all"
                 >
                    Check Route & Weather

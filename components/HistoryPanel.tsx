@@ -31,7 +31,29 @@ interface HistoryPanelProps {
   onRatePlan: (id: string, rating: number) => void;
 }
 
+const classifyPlanGroup = (planText: string): 'Date Night' | 'Crew Hangouts' | 'Solo Chill' | 'Other Vibes' => {
+  if (planText.includes('Category: Romantic Date') || planText.includes('Just the Two of Us') || planText.includes("It's a Double Date")) {
+    return 'Date Night';
+  }
+  if (planText.includes('With the Crew') || planText.includes('Group Size')) {
+    return 'Crew Hangouts';
+  }
+  if (planText.includes('Solo Mission') || planText.includes('Relax & Unwind')) {
+    return 'Solo Chill';
+  }
+  return 'Other Vibes';
+};
+
 const HistoryPanel: React.FC<HistoryPanelProps> = ({ history, isOpen, onClose, onRatePlan }) => {
+  const grouped: Record<string, SavedPlan[]> = history.reduce((acc: Record<string, SavedPlan[]>, item: SavedPlan) => {
+    const group = classifyPlanGroup(item.planContent);
+    if (!acc[group]) acc[group] = [];
+    acc[group].push(item);
+    return acc;
+  }, {} as Record<string, SavedPlan[]>);
+
+  const groupOrder = ['Date Night', 'Crew Hangouts', 'Solo Chill', 'Other Vibes'];
+
   return (
     <aside
       className={`fixed top-0 left-0 h-full bg-[#FFFCF5]/80 dark:bg-slate-900/90 backdrop-blur-md border-r border-[#8C1007]/10 dark:border-slate-700/50 shadow-2xl transition-transform duration-500 ease-in-out z-40 w-full md:w-80 ${
@@ -59,21 +81,32 @@ const HistoryPanel: React.FC<HistoryPanelProps> = ({ history, isOpen, onClose, o
             <p className="text-sm">Choose a plan, and it will be saved here for you to look back on and rate!</p>
           </div>
         ) : (
-          history.map(item => (
-            <div key={item.id} className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg border border-[#8C1007]/20 dark:border-slate-700 animate-slide-in">
-              <h3 className="font-bold text-lg text-[#3E0703] dark:text-slate-200">{getTitleFromPlan(item.planContent)}</h3>
-              <div className="flex items-center text-xs text-[#660B05] dark:text-slate-400 opacity-80 my-2">
-                <TimeIcon />
-                <span className="ml-2">Saved on {new Date(item.savedAt).toLocaleDateString()}</span>
-              </div>
-              <p className="text-[#660B05] dark:text-slate-300 text-sm whitespace-pre-wrap my-3 p-3 bg-[#8C1007]/5 dark:bg-slate-700/50 rounded-md max-h-48 overflow-y-auto">
-                {item.planContent}
-              </p>
-              <div className="mt-3 pt-3 border-t border-[#8C1007]/10 dark:border-slate-700">
-                <p className="text-sm font-semibold text-[#3E0703] dark:text-slate-200 mb-1">Rate this vibe:</p>
-                <StarRating rating={item.rating} onRate={(rating) => onRatePlan(item.id, rating)} />
-              </div>
-            </div>
+          groupOrder.map((groupName) => (
+            grouped[groupName] && grouped[groupName].length > 0 ? (
+              <section key={groupName}>
+                <h3 className="text-xs uppercase tracking-wider font-bold text-[#660B05]/80 dark:text-slate-400 mb-2">
+                  {groupName}
+                </h3>
+                <div className="space-y-4">
+                  {grouped[groupName].map(item => (
+                    <div key={item.id} className="bg-white/50 dark:bg-slate-800/50 p-4 rounded-lg border border-[#8C1007]/20 dark:border-slate-700 animate-slide-in">
+                      <h3 className="font-bold text-lg text-[#3E0703] dark:text-slate-200">{getTitleFromPlan(item.planContent)}</h3>
+                      <div className="flex items-center text-xs text-[#660B05] dark:text-slate-400 opacity-80 my-2">
+                        <TimeIcon />
+                        <span className="ml-2">Saved on {new Date(item.savedAt).toLocaleDateString()}</span>
+                      </div>
+                      <p className="text-[#660B05] dark:text-slate-300 text-sm whitespace-pre-wrap my-3 p-3 bg-[#8C1007]/5 dark:bg-slate-700/50 rounded-md max-h-48 overflow-y-auto">
+                        {item.planContent}
+                      </p>
+                      <div className="mt-3 pt-3 border-t border-[#8C1007]/10 dark:border-slate-700">
+                        <p className="text-sm font-semibold text-[#3E0703] dark:text-slate-200 mb-1">Rate this vibe:</p>
+                        <StarRating rating={item.rating} onRate={(rating) => onRatePlan(item.id, rating)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null
           ))
         )}
       </div>

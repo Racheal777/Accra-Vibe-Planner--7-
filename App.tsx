@@ -32,6 +32,7 @@ const App: React.FC = () => {
     handlePaymentInitiation,
     handleOptionSelect,
     handleBack,
+    handleJumpToStep,
     handleSurpriseMe,
     handleSpecificTimeSubmit,
     handleFindCloser,
@@ -105,6 +106,7 @@ const App: React.FC = () => {
             isTransitioning={isTransitioning}
             onOptionSelect={handleOptionSelect}
             onBack={handleBack}
+            onJumpToStep={handleJumpToStep}
             onBackToWelcome={handleRestart}
             onSurpriseMe={handleSurpriseMe}
             onSpecificTimeSubmit={handleSpecificTimeSubmit}

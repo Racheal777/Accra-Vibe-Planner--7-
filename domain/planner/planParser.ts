@@ -4,6 +4,8 @@ export interface ParsedPlan {
   rawContent: string;
   title: string;
   imageUrl: string;
+  imageStatus: 'external' | 'fallback';
+  parseWarnings: string[];
   category: Vibe;
   location: string;
   rating: string;
@@ -35,6 +37,11 @@ const SUPPORTED_VIBES = new Set<Vibe>([
   '',
 ]);
 
+const isValidExternalImageUrl = (value?: string): boolean => {
+  if (!value) return false;
+  return /^https?:\/\/.+/i.test(value.trim());
+};
+
 export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendation: string | null } => {
   const recommendationMatch = content.match(/Recommendation:([\s\S]*)/);
   const recommendation = recommendationMatch ? recommendationMatch[0].trim() : null;
@@ -45,6 +52,7 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
   const plans = planStrings.map((planString) => {
     const lines = planString.split('\n').filter((line) => line.trim() !== '');
     const data: Partial<ParsedPlan> & { rawContent: string } = { rawContent: planString };
+    const parseWarnings: string[] = [];
     let inChecklist = false;
     let inPicnic = false;
     const picnicItems: string[] = [];
@@ -119,12 +127,22 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
       data.picnicEssentials = picnicItems;
     }
 
-    const category = data.category && SUPPORTED_VIBES.has(data.category) ? data.category : '';
+    const category: Vibe = data.category && SUPPORTED_VIBES.has(data.category) ? data.category : '';
+    const validImage = isValidExternalImageUrl(data.imageUrl);
+    const imageStatus: ParsedPlan['imageStatus'] = validImage ? 'external' : 'fallback';
+    if (!validImage) {
+      parseWarnings.push('Image URL missing or invalid; fallback image will be used.');
+    }
+    if (!data.location) {
+      parseWarnings.push('Location missing in model output.');
+    }
 
     return {
       rawContent: planString,
       title: data.title || 'N/A',
-      imageUrl: data.imageUrl || '',
+      imageUrl: validImage ? (data.imageUrl as string) : '',
+      imageStatus,
+      parseWarnings,
       category,
       location: data.location || 'N/A',
       rating: data.rating || 'N/A',

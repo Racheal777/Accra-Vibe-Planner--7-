@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type Dispatch, type SetStateAction } from 'react';
 import type { HangoutParams, SavedPlan, Location, AppState } from '../types';
 import { generatePlanOptions, getTravelDetails } from '../services/geminiService';
 import { initiatePayment } from '../services/paystackService';
 import { verifyPayment } from '../api/verify-payment';
 import { BILLING, LOCAL_STORAGE_KEYS, RATE_LIMIT } from '../config/appConfig';
 import { getDestinationFromPlan } from '../domain/planner/planParser';
+import { normalizeTimeInput } from '../utils/dateTime';
 
 const MICRO_BOOST_PLAN = BILLING.microBoost.code;
 const POWER_PLANNER_PLAN = BILLING.powerPlanner.code;
 
 
 interface UseVibePlannerProps {
-  setPlanHistory: React.Dispatch<React.SetStateAction<SavedPlan[]>>;
+  setPlanHistory: Dispatch<SetStateAction<SavedPlan[]>>;
 }
 
 export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
@@ -30,6 +31,7 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
     groupSize: undefined,
     travelPreference: '',
     mustHaves: [],
+    openNowOnly: false,
   });
   const [planOptions, setPlanOptions] = useState<string | null>(null);
   const [finalPlan, setFinalPlan] = useState<string | null>(null);
@@ -108,6 +110,10 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
     }, 300);
   };
 
+  const handleJumpToStep = (step: number) => {
+    setCurrentStep(Math.max(0, step));
+  };
+
   const handleSurpriseMe = (key: keyof HangoutParams, options: readonly {name: string, value: any}[]) => {
     const randomIndex = Math.floor(Math.random() * options.length);
     const randomOption = options[randomIndex].value;
@@ -116,8 +122,8 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
   
   const handleStartPlanning = (planningMode: 'quick' | 'detailed') => {
     const defaultsForMode: Partial<HangoutParams> = planningMode === 'quick'
-      ? { planningMode, timeWindow: 'Quickie (1-2 hours)', audience: 'With the Crew' }
-      : { planningMode };
+      ? { planningMode, timeWindow: 'Quickie (1-2 hours)', audience: 'With the Crew', openNowOnly: false }
+      : { planningMode, openNowOnly: false };
     const subStatus = localStorage.getItem(LOCAL_STORAGE_KEYS.subscriptionStatus);
     const subExpiry = localStorage.getItem(LOCAL_STORAGE_KEYS.subscriptionExpiry);
     
@@ -216,7 +222,9 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
     
     const formattedTime = `${String(hour24).padStart(2, '0')}:${minute}`;
     
-    const finalDateTime = date ? `${date}T${formattedTime}` : formattedTime;
+    const finalDateTime = date
+      ? `${date}T${formattedTime}`
+      : `${new Date().toISOString().split('T')[0]}T${formattedTime}`;
     
     setIsTransitioning(true);
     setTimeout(() => {
@@ -265,6 +273,7 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
       if (!origin || !intendedTime || !selectedPlan) return;
       
       setAppState('LOADING');
+      const normalizedIntendedTime = normalizeTimeInput(intendedTime);
       
       const destination = getDestinationFromPlan(selectedPlan);
 
@@ -274,11 +283,11 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
           return;
       }
       
-      const finalParams = { ...params, specificDateTime: intendedTime };
+      const finalParams = { ...params, specificDateTime: normalizedIntendedTime };
       setParams(finalParams);
 
       try {
-          const travelInfo = await getTravelDetails(origin, destination, intendedTime, originCoords);
+          const travelInfo = await getTravelDetails(origin, destination, normalizedIntendedTime, originCoords);
           const fullPlan = `${selectedPlan}\n\n---\n${travelInfo}`;
           setFinalPlan(fullPlan);
           savePlanToHistory(fullPlan);
@@ -321,6 +330,7 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
       groupSize: undefined,
       travelPreference: '',
       mustHaves: [],
+      openNowOnly: false,
     });
     setCurrentStep(0);
     setPlanOptions(null);
@@ -345,6 +355,7 @@ export const useVibePlanner = ({ setPlanHistory }: UseVibePlannerProps) => {
     handleOptionSelect,
     handleSubmit,
     handleBack,
+    handleJumpToStep,
     handleSurpriseMe,
     handleSpecificTimeSubmit,
     handleFindCloser,

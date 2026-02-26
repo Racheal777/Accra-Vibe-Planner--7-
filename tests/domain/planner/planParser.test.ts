@@ -45,7 +45,31 @@ Recommendation: Pick Skybar 25 for a stronger nightlife vibe.`;
     expect(plans).toHaveLength(2);
     expect(plans[0].title).toBe('Skybar 25');
     expect(plans[0].location).toContain('Accra');
+    expect(plans[0].imageStatus).toBe('external');
+    expect(plans[0].parseWarnings).toHaveLength(0);
     expect(recommendation).toContain('Recommendation:');
+  });
+
+  it('falls back image metadata when image url is missing or invalid', () => {
+    const sample = `OPTION 1
+Title: Mystery Spot
+Image URL: not-a-url
+Category: Relax & Unwind
+Location: Osu, Accra
+Rating: Not available
+Opening Hours: Not available
+Essentials Checklist:
+- Dress Code: Casual
+- Noise Level: Moderate
+- Seating: Mixed
+Description: Vibes.
+Cost: GH₵20
+Pro-Tip: Call first.`;
+
+    const { plans } = parsePlans(sample);
+    expect(plans[0].imageUrl).toBe('');
+    expect(plans[0].imageStatus).toBe('fallback');
+    expect(plans[0].parseWarnings.join(' ')).toContain('Image URL');
   });
 
   it('extracts title and destination from raw plan text', () => {

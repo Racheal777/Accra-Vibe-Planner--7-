@@ -62,4 +62,6 @@ export const MUST_HAVE_OPTIONS: Option<MustHave>[] = [
   { name: 'Outdoor seating', value: 'Outdoor seating' },
   { name: 'Easy parking', value: 'Easy parking' },
   { name: 'Reservation not required', value: 'Reservation not required' },
+  { name: 'Kid-friendly', value: 'Kid-friendly' },
+  { name: 'Wheelchair access', value: 'Wheelchair access' },
 ];

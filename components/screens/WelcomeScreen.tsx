@@ -33,8 +33,18 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           </button>
         </div>
         <p className="text-sm mt-4 text-[#660B05]/80 dark:text-slate-400">
-          Quick = 3-4 taps. Detailed = deeper vibe matching.
+          Quick: 3 taps, ready in under 20s. Detailed: deeper matching + travel filters.
         </p>
+        <div className="flex justify-center gap-2 mt-4 flex-wrap">
+          {['Open now', 'Budget-fit', 'Close-by'].map((badge) => (
+            <span
+              key={badge}
+              className="text-xs px-3 py-1 rounded-full bg-[#8C1007]/10 dark:bg-[#E18C44]/20 text-[#660B05] dark:text-slate-300 border border-[#8C1007]/20 dark:border-[#E18C44]/30"
+            >
+              {badge}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
