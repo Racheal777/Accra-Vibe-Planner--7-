@@ -36,26 +36,26 @@ const loadingTexts = [
   "Chaley, where are you? Planner's Response: Oh, I'm in a car, just turning onto Oxford Street...   (Disclaimer: We haven't even taken our bath yet.  The plan is still loading!)",
   "You chose Trotro and you're in a hurry?  Hmm... Looks like somebody is new to Accra, Chale! Your plan is loading, but maybe call a Bolt next time?   Just kidding! (Mostly.)",
 
-  
+
   "Ei, the algorithm just saw your budget and shouted ‘Charle, this be small!’ Negotiating with the vibes to stretch that cedi. Loading…",
-  
+
   "Planner just entered Labadi traffic at 6 PM. Driver says ‘no worry, we go fly top.’ Plan will land when we escape this go-slow!",
   "Your vibe is too hot, the planner had to pause and fan itself with a pure water. Cooling down… almost ready!",
   "Loading interrupted: the system is arguing with MTN over 1GB bundle. ‘Ei, why the data finish so fast?’ Plan resumes after top-up!",
- 
+
   "Planner dey do ‘by-force’ small chops survey: kelewele or plantain chips? Democracy in progress, results loading…",
- 
+
   "The vibe police just pulled us over: ‘License for this level of enjoyment?’ Paying  with laughter… plan cleared for takeoff!",
 
   // New relatable comedy lines inspired by Ghanaian Twitter vibes, including funny political takes
   "Loading glitch! The planner just tweeted 'Tweaa!' at a politician blocking the vibe route. Now it's viral—waiting for the 'Am I your coequal?!' comeback before we proceed, chale!",
   "Ei, planner dey argue like Parliament over galamsey fines. 'No mercury in the vibes!' Recalculating eco-friendly paths past the polluted spots. Hold on!",
-  
-  
+
+
   "Hold tight, the system just quoted 'Sika mpɛ dedɛ' while crunching your budget. Money no like noise, but your plan will shout value! Almost there.",
- 
+
   "Ei, the vibe AI just saw the cybersecurity bill and whispered, 'Offensive comment? Jail?' Keeping it chill and non-political. Plan loading quietly...",
- 
+
   "Your plan's stuck in Dumsor mode—power outage from budget cuts! Finding a generator spot. No worry, the vibes will light up soon!",
   "Haha, planner just challenged a ghost name in the NSA fraud list. 'You no dey exist!' Verifying real spots only. Authentic plan incoming!"
 ];
@@ -70,7 +70,7 @@ const DynamicLoading = () => {
     // Select a random animation when the component mounts
     const randomAnimationIndex = Math.floor(Math.random() * animationScenarios.length);
     setAnimation(animationScenarios[randomAnimationIndex].animation);
-    
+
     // Set an initial random text
     const randomTextIndex = Math.floor(Math.random() * loadingTexts.length);
     setCurrentText(loadingTexts[randomTextIndex]);
@@ -102,8 +102,8 @@ const DynamicLoading = () => {
       <div className="w-full h-36 overflow-x-hidden relative">
         {animation}
       </div>
-      <div className="mt-4 text-center max-w-md mx-auto h-24 flex items-center justify-center">
-        <p className={`text-[#8C1007] dark:text-[#E18C44] text-xl transition-opacity duration-500 ${isTextFading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className="mt-8 text-center max-w-2xl mx-auto min-h-[120px] flex items-center justify-center p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-soft)] shadow-sm">
+        <p className={`text-[var(--accent-primary)] font-medium text-lg md:text-xl leading-relaxed transition-opacity duration-500 ${isTextFading ? 'opacity-0' : 'opacity-100'}`}>
           {currentText}
         </p>
       </div>

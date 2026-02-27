@@ -2,33 +2,33 @@
 import React from 'react';
 
 export const VibeIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+    </svg>
 );
 
 export const TimeIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
 );
 
 export const MissionIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+    </svg>
 );
 
 export const CostIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
 );
 
 export const TipIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>
 );
 
 export const LocationIcon = () => (
@@ -53,8 +53,8 @@ export const TravelIcon = () => (
 
 export const PicnicIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 11h14M5 11a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v3a2 2 0 01-2 2M5 11v9a2 2 0 002 2h10a2 2 0 002-2v-9" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 11h14M5 11a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v3a2 2 0 01-2 2M5 11v9a2 2 0 002 2h10a2 2 0 002-2v-9" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1" />
     </svg>
 );
 
@@ -120,13 +120,13 @@ export const MoonIcon = () => (
 );
 
 export const WeatherIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+    </svg>
 );
 
 export const HeartIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block align-middle text-[#8C1007] dark:text-[#E18C44]" viewBox="0 0 20 20" fill="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 inline-block align-middle" style={{ color: 'var(--accent-primary)' }} viewBox="0 0 20 20" fill="currentColor">
         <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
     </svg>
 );
@@ -141,9 +141,9 @@ export const CurrentLocationIcon = ({ spinning }: { spinning?: boolean }) => (
 export const VoilaSunIcon = () => (
     <div className="relative inline-block">
         <span role="img" aria-label="Happy sun" className="text-6xl drop-shadow-lg">☀️</span>
-        <div className="absolute -top-2 -right-14 bg-white dark:bg-slate-700 px-4 py-2 rounded-full shadow-lg">
-            <p className="text-lg font-bold text-[#3E0703] dark:text-slate-200">Voila!</p>
-            <div className="absolute left-2 -bottom-2 w-0 h-0 border-l-[10px] border-l-transparent border-t-[15px] border-t-white dark:border-t-slate-700 transform -rotate-45"></div>
+        <div className="absolute -top-2 -right-14 px-4 py-2 rounded-full shadow-lg" style={{ backgroundColor: 'var(--bg-surface)' }}>
+            <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Voila!</p>
+            <div className="absolute left-2 -bottom-2 w-0 h-0 border-l-[10px] border-l-transparent border-t-[15px] transform -rotate-45" style={{ borderTopColor: 'var(--bg-surface)' }}></div>
         </div>
     </div>
 );
@@ -176,5 +176,17 @@ export const SeatingIcon = () => (
 export const CrownIcon = ({ className }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
         <path d="M10 2a1 1 0 01.78.37l3.65 4.37a1 1 0 01-.78 1.63H6.35a1 1 0 01-.78-1.63l3.65-4.37A1 1 0 0110 2zM3 9a1 1 0 000 2h14a1 1 0 100-2H3zM4 13a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1z" />
+    </svg>
+);
+
+export const UberIcon = () => (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.6c-5.293 0-9.6-4.307-9.6-9.6s4.307-9.6 9.6-9.6 9.6 4.307 9.6 9.6-4.307 9.6-9.6 9.6zm4.8-12h-9.6v4.8h9.6v-4.8z" />
+    </svg>
+);
+
+export const BoltIcon = () => (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+        <path d="M11 20L12.5 13H8L13 4L11.5 11H16L11 20Z" />
     </svg>
 );

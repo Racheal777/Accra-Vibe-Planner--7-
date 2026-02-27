@@ -8,7 +8,7 @@ interface Option<T> {
 export const VIBE_OPTIONS: Option<Vibe>[] = [
   { name: 'Relax & Unwind', value: 'Relax & Unwind' },
   { name: 'Food & Nightlife', value: 'Food & Nightlife' },
-  { name: 'Rich Kids Sports', value: 'Rich Kids Sports' },
+  { name: 'Sports & Games', value: 'Sports & Games' },
   { name: 'Active & Adventure', value: 'Active & Adventure' },
   { name: 'Movies & Plays', value: 'Movies & Plays' },
   { name: 'Romantic Date', value: 'Romantic Date' },
@@ -16,7 +16,7 @@ export const VIBE_OPTIONS: Option<Vibe>[] = [
 ];
 
 export const TIME_WINDOW_OPTIONS: Option<TimeWindow>[] = [
-  { name: 'Quickie (1-2 hours)', value: 'Quickie (1-2 hours)' },
+  { name: 'Quick Stop (1-2 hours)', value: 'Quick Stop (1-2 hours)' },
   { name: 'Half-Day Sesh (3-4 hours)', value: 'Half-Day Sesh (3-4 hours)' },
   { name: 'The Main Event (5+ hours)', value: 'The Main Event (5+ hours)' },
   { name: 'A Whole Day Trip (8+ hours)', value: 'A Whole Day Trip (8+ hours)' },

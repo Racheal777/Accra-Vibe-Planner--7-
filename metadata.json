@@ -1,5 +1,5 @@
 {
-  "name": "Copy of Accra Vibe Planner",
+  "name": "Accra Vibe Planner",
   "description": "Your personal guide to the perfect Accra hangout. Get smart, AI-generated plans based on your location, timing, budget, and vibe. Perfect for solo missions or group hangs. Set the vibe, we'll do the rest!",
   "requestFramePermissions": [
     "geolocation"

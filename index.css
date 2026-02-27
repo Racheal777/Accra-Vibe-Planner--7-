@@ -1,0 +1,215 @@
+:root {
+  /* Light Mode - Crisp, gallery-white feel */
+  --bg-canvas: #FDFDFD;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F9FAFB;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
+  --border-soft: #F3F4F6;
+  --border-strong: #E5E7EB;
+  
+  /* Primary Action */
+  --accent-primary: #F97316;
+  --accent-primary-hover: #EA580C;
+  --accent-secondary: #0F766E;
+  
+  /* Status */
+  --success: #15803D;
+  --warning: #B45309;
+  --danger: #B91C1C;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Dark Mode - Deep Charcoal/Slate */
+  --bg-canvas: #0F1115;
+  --bg-surface: #1A1D24;
+  --bg-elevated: #242830;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --border-soft: #2A2F3A;
+  --border-strong: #3F4656;
+  
+  --accent-primary: #F97316;
+  --accent-primary-hover: #FB923C;
+  --accent-secondary: #2DD4BF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6,
+button {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -48px;
+  background: var(--accent-primary);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  z-index: 200;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid var(--accent-secondary);
+  outline-offset: 2px;
+}
+
+.surface-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-chip {
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--bg-surface) 85%, var(--accent-primary) 15%);
+  color: var(--text-secondary);
+  border-radius: 999px;
+}
+
+.animate-progress {
+  animation: progress-animation 0.5s ease-out forwards;
+}
+
+@keyframes progress-animation {
+  from { width: 0%; }
+}
+
+.animate-slide-in {
+  animation: slide-in-animation 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes slide-in-animation {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes drive-across {
+  from { transform: translateX(-160px); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes landing-drive {
+  from { transform: translateX(-240px); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes motorbike-drive {
+  from { transform: translateX(-200px); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes trotro-bounce {
+  0%, 100% { transform: translateY(0) rotate(0.2deg); }
+  20% { transform: translateY(-9px) rotate(-1deg); }
+  45% { transform: translateY(3px) rotate(0.6deg); }
+  75% { transform: translateY(-5px) rotate(-0.5deg); }
+}
+
+@keyframes car-wiggle {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-2px) rotate(0.5deg); }
+}
+
+@keyframes okada-rush {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-3px) rotate(2deg); }
+}
+
+@keyframes walk-cycle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes walk-leg-1 {
+  0%, 100% { transform: rotate(-20deg); }
+  50% { transform: rotate(25deg); }
+}
+
+@keyframes walk-leg-2 {
+  0%, 100% { transform: rotate(25deg); }
+  50% { transform: rotate(-20deg); }
+}
+
+@keyframes walk-arm-1 {
+  0%, 100% { transform: rotate(15deg); }
+  50% { transform: rotate(-10deg); }
+}
+
+@keyframes walk-arm-2 {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(15deg); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-20deg); }
+}
+
+.capturing {
+  padding: 2rem !important;
+  background-color: var(--bg-canvas) !important;
+}
+
+.capturing > div {
+  background-color: var(--bg-surface) !important;
+  box-shadow: var(--shadow-sm) !important;
+  border: 1px solid var(--border-soft) !important;
+}
+
+.capturing .animate-slide-in {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.dark .road-line {
+  stroke: rgba(243, 244, 246, 0.2);
+}

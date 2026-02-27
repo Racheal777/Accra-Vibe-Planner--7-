@@ -29,23 +29,23 @@ export const getQuestions = (currentParams: HangoutParams): Question[] => {
       : { key: 'audience', prompt: "Who's in this mission?", type: 'options', options: AUDIENCE_OPTIONS, section: 'Constraints' };
       
     const quickQuestions: Question[] = [
-      { key: 'vibe', prompt: 'What kind of outing do you want right now?', type: 'options', options: VIBE_OPTIONS, section: 'Mood' },
-      { key: 'budget', prompt: 'Budget per person?', type: 'options', options: BUDGET_OPTIONS, section: 'Constraints', helperText: 'Tip: you can tweak this later.' },
-      { key: 'timing', prompt: "When are we doing this?", type: 'options', options: TIMING_OPTIONS, section: 'Logistics' },
+      { key: 'vibe', prompt: 'What kind of outing do you want right now?', type: 'options', options: VIBE_OPTIONS, section: 'Mood', helperText: 'Why we ask this: it sets the mood and shortlists better venues fast.' },
+      { key: 'budget', prompt: 'Budget per person?', type: 'options', options: BUDGET_OPTIONS, section: 'Constraints', helperText: 'Why we ask this: we avoid options that overshoot your spend.' },
+      { key: 'timing', prompt: "When are we doing this?", type: 'options', options: TIMING_OPTIONS, section: 'Logistics', helperText: 'Why we ask this: open-hours and traffic differ by time.' },
     ];
 
     const questions: Question[] = isQuick ? quickQuestions : [
-      { key: 'vibe', prompt: "First, what's the vibe?", type: 'options', options: VIBE_OPTIONS, section: 'Mood' },
-      ...(currentParams.vibe === 'Romantic Date' ? [{ key: 'dateMeal', prompt: 'Perfect. What time of day is the date?', type: 'options', options: DATE_MEAL_OPTIONS, section: 'Mood' } as Question] : []),
-      { key: 'timeWindow', prompt: 'How much time have you got?', type: 'options', options: TIME_WINDOW_OPTIONS, section: 'Constraints' },
-      { key: 'budget', prompt: 'How deep are your pockets?', type: 'options', options: BUDGET_OPTIONS, section: 'Constraints' },
-      audienceQuestion,
-      { key: 'travelPreference', prompt: 'How far are you willing to go?', type: 'options', options: TRAVEL_PREFERENCE_OPTIONS, section: 'Logistics' },
-      { key: 'mustHaves', prompt: 'Any must-haves? Pick one or more.', type: 'options', options: MUST_HAVE_OPTIONS, section: 'Logistics', multiSelect: true },
+      { key: 'vibe', prompt: "First, what's the vibe?", type: 'options', options: VIBE_OPTIONS, section: 'Mood', helperText: 'Why we ask this: vibe is the strongest predictor of a satisfying pick.' },
+      ...(currentParams.vibe === 'Romantic Date' ? [{ key: 'dateMeal', prompt: 'Perfect. What time of day is the date?', type: 'options', options: DATE_MEAL_OPTIONS, section: 'Mood', helperText: 'Why we ask this: timing changes atmosphere and venue quality.' } as Question] : []),
+      { key: 'timeWindow', prompt: 'How much time have you got?', type: 'options', options: TIME_WINDOW_OPTIONS, section: 'Constraints', helperText: 'Why we ask this: short windows need close-by, low-friction plans.' },
+      { key: 'budget', prompt: 'How deep are your pockets?', type: 'options', options: BUDGET_OPTIONS, section: 'Constraints', helperText: 'Why we ask this: we optimize for best value at your spend range.' },
+      { ...audienceQuestion, helperText: 'Why we ask this: group size and social context affect seating and activity fit.' },
+      { key: 'travelPreference', prompt: 'How far are you willing to go?', type: 'options', options: TRAVEL_PREFERENCE_OPTIONS, section: 'Logistics', helperText: 'Why we ask this: this helps us prioritize practical options.' },
+      { key: 'mustHaves', prompt: 'Any must-haves? Pick one or more.', type: 'options', options: MUST_HAVE_OPTIONS, section: 'Logistics', helperText: 'Why we ask this: non-negotiables prevent bad recommendations.', multiSelect: true },
     ];
 
     if (!isQuick && currentParams.audience === 'With the Crew') {
-      questions.push({ key: 'groupSize', prompt: 'How many in your crew?', type: 'number' });
+      questions.push({ key: 'groupSize', prompt: 'How many in your crew?', type: 'number', helperText: 'Why we ask this: we avoid spots that feel cramped for bigger groups.' });
     }
 
     // Dynamic Timing Options Logic
@@ -96,13 +96,13 @@ export const getQuestions = (currentParams: HangoutParams): Question[] => {
 
 
     if (!isQuick) {
-      questions.push({ key: 'timing', prompt: 'And when are we doing this?', type: 'options', options: timingOptions, section: 'Logistics' });
+      questions.push({ key: 'timing', prompt: 'And when are we doing this?', type: 'options', options: timingOptions, section: 'Logistics', helperText: 'Why we ask this: open venues and traffic windows shift throughout the day.' });
     }
 
     if (currentParams.timing === 'Later Today') {
-        questions.push({ key: 'specificDateTime', prompt: 'Got it. What time later today?', type: 'time', section: 'Logistics' });
+        questions.push({ key: 'specificDateTime', prompt: 'Got it. What time later today?', type: 'time', section: 'Logistics', helperText: 'Why we ask this: exact timing improves open-now confidence.' });
     } else if (currentParams.timing === 'Sometime This Week') {
-        questions.push({ key: 'specificDateTime', prompt: 'Sounds good. What day and time?', type: 'date-and-time', section: 'Logistics' });
+        questions.push({ key: 'specificDateTime', prompt: 'Sounds good. What day and time?', type: 'date-and-time', section: 'Logistics', helperText: 'Why we ask this: date and time influence route conditions and hours.' });
     }
 
     return questions;

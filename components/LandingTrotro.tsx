@@ -17,7 +17,7 @@ const LandingTrotro = () => (
             <svg width="100%" height="100%">
                 <defs>
                     <pattern id="road-pattern" patternUnits="userSpaceOnUse" width="100" height="4">
-                        <path d="M0 2 H60" stroke="rgba(62, 7, 3, 0.2)" strokeWidth="4" strokeDasharray="30 30" className="road-line" />
+                        <path d="M0 2 H60" stroke="var(--border-strong)" strokeWidth="4" strokeDasharray="30 30" className="road-line" />
                     </pattern>
                 </defs>
                 <rect fill="url(#road-pattern)" width="200%" height="4" style={{ animation: 'move-road 1.5s linear infinite' }}/>
@@ -41,15 +41,15 @@ const LandingTrotro = () => (
                     {/* Main Body Fill */}
                     <rect x="10" y="40" width="220" height="80" rx="10" fill="#f8fafc"/>
                     {/* Red Stripe */}
-                    <rect x="10" y="90" width="220" height="15" fill="#8C1007" />
+                    <rect x="10" y="90" width="220" height="15" fill="var(--accent-primary)" />
                     {/* Main Body Stroke (drawn on top to fix artifacts) */}
                     <path d="M20 40 H 220 A 10 10 0 0 1 230 50 V 110 A 10 10 0 0 1 220 120 H 20 A 10 10 0 0 1 10 110 V 50 A 10 10 0 0 1 20 40 Z" stroke="#1e293b" strokeWidth="4" fill="none" />
                     
                     {/* Mate (conductor) */}
                     <path d="M230 70 V 105 H 210 V 70 Z" fill="#FFFCF5" stroke="#1e293b" strokeWidth="2" />
                     <g style={{transform: 'translate(213px, 75px)', animation: 'wave 1.5s ease-in-out infinite'}}>
-                      <circle cx="0" cy="-5" r="7" fill="#660B05" />
-                      <rect x="-3" y="2" width="6" height="20" rx="3" fill="#660B05" />
+                      <circle cx="0" cy="-5" r="7" fill="var(--accent-primary-hover)" />
+                      <rect x="-3" y="2" width="6" height="20" rx="3" fill="var(--accent-primary-hover)" />
                     </g>
                     {/* Windows */}
                     <rect x="25" y="50" width="35" height="25" fill="url(#landing-window)" opacity="0.8"/>
@@ -74,7 +74,7 @@ const LandingTrotro = () => (
                     <ellipse cx="110" cy="138" rx="55" ry="7" fill="black" opacity="0.1" />
                     {/* Rider */}
                     <path d="M110 55 C 100 75, 100 95, 110 110 L 125 110 C 135 95, 135 75, 125 55 Z" fill="#334155" />
-                    <circle cx="118" cy="45" r="12" fill="#8C1007" stroke="#1e293b" strokeWidth="3" />
+                    <circle cx="118" cy="45" r="12" fill="var(--accent-primary)" stroke="#1e293b" strokeWidth="3" />
                     <path d="M108 45 C 115 42, 125 42, 130 48" stroke="#FFFCF5" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7" />
                     {/* Bike Body */}
                     <path d="M88 120 L 150 120" stroke="#1e293b" strokeWidth="4" strokeLinecap="round"/>

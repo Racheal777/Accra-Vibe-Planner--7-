@@ -64,7 +64,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
 
     return (
         <div className="flex flex-col justify-center items-center p-4 h-full z-10">
-            <div className="w-full max-w-md bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-white/50 dark:border-slate-700/50 text-left animate-slide-in relative">
+            <div className="w-full max-w-md p-8 rounded-lg shadow-lg text-left animate-slide-in relative" style={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-soft)' }}>
                 <button 
                     onClick={onBack} 
                     className="absolute top-2 left-3 sm:top-3 sm:left-4 text-[#3E0703] dark:text-slate-200 hover:text-[#8C1007] dark:hover:text-white font-bold transition-all flex items-center text-lg py-3 px-4 sm:py-4 rounded-lg hover:bg-[#8C1007]/10 dark:hover:bg-[#E18C44]/20"
@@ -75,8 +75,8 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
                     </svg>
                     Back
                 </button>
-                <h2 className="text-2xl font-bold text-[#3E0703] dark:text-slate-100 mb-2 text-center pt-10 sm:pt-0">One Last Step...</h2>
-                <p className="text-[#660B05] dark:text-slate-300 mb-6 text-lg text-center">Let's check the route! Tell us your starting point for a live traffic and weather forecast.</p>
+                <h2 className="text-2xl font-bold mb-2 text-center pt-10 sm:pt-0" style={{ color: 'var(--text-primary)' }}>One Last Step...</h2>
+                <p className="mb-6 text-lg text-center" style={{ color: 'var(--text-secondary)' }}>Let's check the route. Share your start point for traffic and weather confidence.</p>
                 <div className="space-y-6">
                     <div>
                         <label htmlFor="userOrigin" className="block text-lg font-semibold text-[#3E0703] dark:text-slate-200 mb-2">Where will you be coming from?</label>
@@ -103,8 +103,8 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
                         </div>
                         <p className="text-xs text-[#660B05]/80 dark:text-slate-400 mt-1.5 px-1">For best results, enter a specific landmark or full address.</p>
                         {originCoords && (
-                          <p className="text-xs text-green-700 dark:text-green-400 mt-1.5 px-1 font-semibold">
-                            Using GPS location. You can leave the field as-is.
+                          <p className="text-xs mt-1.5 px-1 font-semibold" style={{ color: 'var(--success)' }}>
+                            Using GPS location. Origin text is optional.
                           </p>
                         )}
                         {userOriginError && <p className="text-sm text-red-600 dark:text-red-400 mt-1.5 px-1">{userOriginError}</p>}
@@ -144,7 +144,7 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
                             </button>
                           )}
                         </div>
-                        <p className="text-xs text-[#660B05]/80 dark:text-slate-400 mt-1">
+                        <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                           Planning for: {formatPlanningDateTime(normalizeTimeInput(intendedTime)) || 'Not selected'}
                         </p>
                         {timeError && <p className="text-sm text-red-600 dark:text-red-400 mt-1.5 px-1">{timeError}</p>}
@@ -153,7 +153,8 @@ const LocationInput: React.FC<LocationInputProps> = ({ initialIntendedTime, timi
                 <button
                    onClick={handleSubmit}
                    disabled={(!userOrigin.trim() && !originCoords)}
-                   className="w-full mt-8 py-3 px-6 bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900 font-bold rounded-lg shadow-md hover:bg-[#660B05] dark:hover:bg-[#f3a469] disabled:bg-[#8C1007]/50 dark:disabled:bg-[#E18C44]/50 transition-all"
+                   className="w-full mt-8 py-3 px-6 text-white font-bold rounded-lg shadow-md transition-all disabled:opacity-50"
+                   style={{ backgroundColor: 'var(--accent-primary)' }}
                 >
                    Check Route & Weather
                 </button>

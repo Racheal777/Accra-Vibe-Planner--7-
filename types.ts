@@ -7,7 +7,7 @@
 export type Vibe =
   | 'Relax & Unwind'
   | 'Food & Nightlife'
-  | 'Rich Kids Sports'
+  | 'Sports & Games'
   | 'Active & Adventure'
   | 'Movies & Plays'
   | 'Romantic Date'
@@ -15,7 +15,7 @@ export type Vibe =
   | '';
 
 export type TimeWindow =
-  | 'Quickie (1-2 hours)'
+  | 'Quick Stop (1-2 hours)'
   | 'Half-Day Sesh (3-4 hours)'
   | 'The Main Event (5+ hours)'
   | 'A Whole Day Trip (8+ hours)'

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import type { SavedPlan } from './types';
 import PlanDisplay from './components/PlanDisplay';
 import DynamicLoading from './components/DynamicLoading';
-import HistoryPanel from './components/HistoryPanel';
-import Confetti from './components/Confetti';
 import { HistoryIcon, SunIcon, MoonIcon, HeartIcon } from './components/Icons';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import RateLimitScreen from './components/screens/RateLimitScreen';
@@ -12,6 +10,9 @@ import LocationInput from './components/screens/LocationInput';
 import ErrorScreen from './components/screens/ErrorScreen';
 import { useVibePlanner } from './hooks/useVibePlanner';
 import { LOCAL_STORAGE_KEYS } from './config/appConfig';
+
+const HistoryPanel = lazy(() => import('./components/HistoryPanel'));
+const Confetti = lazy(() => import('./components/Confetti'));
 
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -161,38 +162,44 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FFFCF5] dark:bg-slate-900 overflow-hidden pb-10">
-        {appState === 'SHOWING_FINAL_PLAN' && <Confetti />}
-        <div className="fixed top-4 right-4 z-30 flex items-center gap-2">
+    <div className="relative min-h-screen overflow-hidden pb-10" style={{ backgroundColor: 'var(--bg-canvas)', color: 'var(--text-primary)' }}>
+        <Suspense fallback={null}>
+          {appState === 'SHOWING_FINAL_PLAN' && <Confetti />}
+        </Suspense>
+        <header className="fixed top-4 right-4 z-30 flex items-center gap-2">
             <button
                 onClick={toggleDarkMode}
-                className="p-3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white dark:hover:bg-slate-700 transition-all text-[#3E0703] dark:text-slate-200"
+                className="focus-ring p-3 rounded-full transition-all"
+                style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-soft)' }}
                 aria-label="Toggle dark mode"
             >
                 {isDarkMode ? <SunIcon /> : <MoonIcon />}
             </button>
             <button
                 onClick={() => setIsHistoryPanelOpen(!isHistoryPanelOpen)}
-                className="p-3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white dark:hover:bg-slate-700 transition-all text-[#3E0703] dark:text-slate-200"
+                className="focus-ring p-3 rounded-full transition-all"
+                style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-soft)' }}
                 aria-label="Toggle history panel"
             >
                 <HistoryIcon />
             </button>
-        </div>
+        </header>
 
-        <main className={`transition-all duration-500 ease-in-out w-full min-h-screen ${isHistoryPanelOpen ? 'pl-0 md:pl-80' : 'pl-0'}`}>
+        <main id="main-content" className={`transition-all duration-500 ease-in-out w-full min-h-screen ${isHistoryPanelOpen ? 'pl-0 md:pl-80' : 'pl-0'}`}>
             <div className="min-h-screen flex flex-col justify-center">
               {mainContent()}
             </div>
         </main>
 
-        <HistoryPanel
-            history={planHistory}
-            isOpen={isHistoryPanelOpen}
-            onClose={() => setIsHistoryPanelOpen(false)}
-            onRatePlan={handleRatePlan}
-        />
-        <footer className="fixed bottom-0 left-0 right-0 p-3 text-center text-xs text-[#660B05]/80 dark:text-slate-400 bg-[#FFFCF5]/50 dark:bg-slate-900/50 backdrop-blur-sm z-20">
+        <Suspense fallback={null}>
+          <HistoryPanel
+              history={planHistory}
+              isOpen={isHistoryPanelOpen}
+              onClose={() => setIsHistoryPanelOpen(false)}
+              onRatePlan={handleRatePlan}
+          />
+        </Suspense>
+        <footer className="fixed bottom-0 left-0 right-0 p-3 text-center text-xs z-20" style={{ color: 'var(--text-muted)', backgroundColor: 'var(--bg-canvas)', borderTop: '1px solid var(--border-soft)' }}>
             Developed by Racheal Kuranchie, kuranchieracheal35@gmail.com, with love <HeartIcon />
         </footer>
     </div>

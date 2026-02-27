@@ -1,11 +1,13 @@
 import type { Vibe } from '../../types';
 
 export interface ParsedPlan {
+  id: string;
   rawContent: string;
   title: string;
   imageUrl: string;
   imageStatus: 'external' | 'fallback';
   parseWarnings: string[];
+  reasoning?: string;
   category: Vibe;
   location: string;
   rating: string;
@@ -17,6 +19,8 @@ export interface ParsedPlan {
   noiseLevel: string;
   seating: string;
   picnicEssentials: string[] | null;
+  estimatedRideCost?: string;
+  weather?: string;
 }
 
 export interface ParsedTravelDetails {
@@ -29,7 +33,7 @@ export interface ParsedTravelDetails {
 const SUPPORTED_VIBES = new Set<Vibe>([
   'Relax & Unwind',
   'Food & Nightlife',
-  'Rich Kids Sports',
+  'Sports & Games',
   'Active & Adventure',
   'Movies & Plays',
   'Romantic Date',
@@ -49,7 +53,7 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
   const plansContent = recommendation ? content.split(recommendation)[0] : content;
   const planStrings = plansContent.split('---').map((plan) => plan.trim()).filter(Boolean);
 
-  const plans = planStrings.map((planString) => {
+  const plans = planStrings.map((planString, index) => {
     const lines = planString.split('\n').filter((line) => line.trim() !== '');
     const data: Partial<ParsedPlan> & { rawContent: string } = { rawContent: planString };
     const parseWarnings: string[] = [];
@@ -63,38 +67,44 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
 
       if (key.trim().toLowerCase().includes('option')) return;
 
-      if (!line.trim().startsWith('-')) {
+      if (!line.trim().match(/^[-*]/)) {
         inChecklist = false;
         inPicnic = false;
       }
 
-      switch (key.trim()) {
+      const cleanKey = key.replace(/^[-*]+/, '').replace(/\*/g, '').trim();
+      const cleanValue = value.replace(/\*/g, '').trim();
+
+      switch (cleanKey) {
         case 'Title':
-          data.title = value;
-          break;
-        case 'Image URL':
-          data.imageUrl = value;
+          data.title = cleanValue;
           break;
         case 'Category':
-          data.category = value as Vibe;
+          data.category = cleanValue as Vibe;
           break;
         case 'Location':
-          data.location = value;
+          data.location = cleanValue;
           break;
         case 'Rating':
-          data.rating = value;
+          data.rating = cleanValue;
           break;
         case 'Opening Hours':
-          data.openingHours = value;
+          data.openingHours = cleanValue;
           break;
         case 'Description':
-          data.description = value;
+          data.description = cleanValue;
           break;
         case 'Cost':
-          data.cost = value;
+          data.cost = cleanValue;
+          break;
+        case 'Estimated Ride Cost':
+          data.estimatedRideCost = cleanValue;
+          break;
+        case 'Weather':
+          data.weather = cleanValue;
           break;
         case 'Pro-Tip':
-          data.proTip = value;
+          data.proTip = cleanValue;
           break;
         case 'Essentials Checklist':
           inChecklist = true;
@@ -103,20 +113,19 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
           inPicnic = true;
           break;
         default:
-          if (inChecklist && line.trim().startsWith('-')) {
-            const checkKey = key.trim().substring(1).trim();
-            switch (checkKey) {
+          if (inChecklist && line.trim().match(/^[-*]/)) {
+            switch (cleanKey) {
               case 'Dress Code':
-                data.dressCode = value;
+                data.dressCode = cleanValue;
                 break;
               case 'Noise Level':
-                data.noiseLevel = value;
+                data.noiseLevel = cleanValue;
                 break;
               case 'Seating':
-                data.seating = value;
+                data.seating = cleanValue;
                 break;
             }
-          } else if (inPicnic && line.trim().startsWith('-')) {
+          } else if (inPicnic && line.trim().match(/^[-*]/)) {
             picnicItems.push(line.substring(1).trim());
           }
           break;
@@ -128,23 +137,23 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
     }
 
     const category: Vibe = data.category && SUPPORTED_VIBES.has(data.category) ? data.category : '';
-    const validImage = isValidExternalImageUrl(data.imageUrl);
-    const imageStatus: ParsedPlan['imageStatus'] = validImage ? 'external' : 'fallback';
-    if (!validImage) {
-      parseWarnings.push('Image URL missing or invalid; fallback image will be used.');
-    }
-    if (!data.location) {
-      parseWarnings.push('Location missing in model output.');
-    }
+    const title = data.title || 'N/A';
+    const location = data.location || 'N/A';
+    const id = `${index + 1}-${title}-${location}`
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
 
     return {
+      id,
       rawContent: planString,
-      title: data.title || 'N/A',
-      imageUrl: validImage ? (data.imageUrl as string) : '',
-      imageStatus,
+      title,
+      imageUrl: '',
+      imageStatus: 'fallback' as const,
       parseWarnings,
+      reasoning: undefined,
       category,
-      location: data.location || 'N/A',
+      location,
       rating: data.rating || 'N/A',
       openingHours: data.openingHours || 'N/A',
       description: data.description || 'No description available.',
@@ -154,6 +163,8 @@ export const parsePlans = (content: string): { plans: ParsedPlan[]; recommendati
       noiseLevel: data.noiseLevel || 'N/A',
       seating: data.seating || 'N/A',
       picnicEssentials: data.picnicEssentials || null,
+      estimatedRideCost: data.estimatedRideCost,
+      weather: data.weather,
     };
   });
 

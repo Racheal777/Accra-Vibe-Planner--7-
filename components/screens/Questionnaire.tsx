@@ -11,7 +11,7 @@ interface QuestionnaireProps {
     onBack: () => void;
     onJumpToStep: (step: number) => void;
     onBackToWelcome: () => void;
-    onSurpriseMe: (key: keyof HangoutParams, options: readonly {name: string, value: any}[]) => void;
+    onSurpriseMe: (key: keyof HangoutParams, options: readonly { name: string, value: any }[]) => void;
     onSpecificTimeSubmit: (date: string, hour: string, minute: string, ampm: string) => void;
     isDarkMode: boolean;
     handleSubmit: (params: HangoutParams) => void;
@@ -93,8 +93,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
         const hour24 = specificAmPmInput === 'PM' && Number(specificHourInput) < 12
             ? Number(specificHourInput) + 12
             : specificAmPmInput === 'AM' && Number(specificHourInput) === 12
-            ? 0
-            : Number(specificHourInput);
+                ? 0
+                : Number(specificHourInput);
         const day = specificDateInput || new Date().toISOString().split('T')[0];
         const asIso = `${day}T${String(hour24).padStart(2, '0')}:${specificMinuteInput}`;
         return formatPlanningDateTime(asIso);
@@ -106,32 +106,33 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
     return (
         <div className="flex flex-col items-center justify-center p-4 z-10">
             <div className="w-full max-w-2xl mx-auto">
-                <div className="bg-[#8C1007]/20 dark:bg-slate-700 rounded-full h-2.5 w-full mb-4">
-                    <div className="bg-[#8C1007] dark:bg-[#E18C44] h-2.5 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+                <div className="rounded-full h-2.5 w-full mb-4" style={{ backgroundColor: 'var(--border-strong)' }}>
+                    <div className="h-2.5 rounded-full transition-all duration-500" style={{ backgroundColor: 'var(--accent-primary)', width: `${progress}%` }}></div>
                 </div>
                 {!isReviewStep && currentQuestion?.section && (
-                    <p className="text-xs uppercase tracking-wider mb-2 text-center font-bold text-[#660B05]/80 dark:text-slate-400">
+                    <p className="text-xs uppercase tracking-wider mb-2 text-center font-bold" style={{ color: 'var(--text-secondary)' }}>
                         {currentQuestion.section} • Step {currentStep + 1} of {questions.length + 1}
                     </p>
                 )}
                 {!isReviewStep && vibeSummaryChips.length > 0 && (
                     <div className="flex justify-center flex-wrap gap-2 mb-4">
                         {vibeSummaryChips.map(chip => (
-                            <span key={chip} className="text-xs px-3 py-1 rounded-full bg-[#8C1007]/10 dark:bg-[#E18C44]/20 text-[#660B05] dark:text-slate-300 border border-[#8C1007]/20 dark:border-[#E18C44]/30">
+                            <span key={chip} className="text-xs px-3 py-1 rounded-full font-medium" style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-secondary)', border: '1px solid var(--border-soft)' }}>
                                 {chip}
                             </span>
                         ))}
                     </div>
                 )}
                 {isReviewStep && (
-                    <p className="text-xs uppercase tracking-wider mb-4 text-center font-bold text-[#660B05]/80 dark:text-slate-400">
+                    <p className="text-xs uppercase tracking-wider mb-4 text-center font-bold" style={{ color: 'var(--text-secondary)' }}>
                         Review • Final Step
                     </p>
                 )}
-                <div className={`bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl shadow-xl p-8 pt-16 sm:p-8 sm:pt-12 transition-all duration-500 relative ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-                    <button 
-                        onClick={currentStep === 0 ? onBackToWelcome : onBack} 
-                        className="absolute top-2 left-3 sm:top-3 sm:left-4 text-[#3E0703] dark:text-slate-200 hover:text-[#8C1007] dark:hover:text-white font-bold transition-all flex items-center text-lg py-3 px-4 sm:py-4 rounded-lg hover:bg-[#8C1007]/10 dark:hover:bg-[#E18C44]/20"
+                <div className={`rounded-2xl shadow-xl p-8 pt-16 sm:p-8 sm:pt-12 transition-all duration-500 relative ${isTransitioning ? 'opacity-0' : 'opacity-100'}`} style={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-soft)' }}>
+                    <button
+                        onClick={currentStep === 0 ? onBackToWelcome : onBack}
+                        className="absolute top-2 left-3 sm:top-3 sm:left-4 font-bold transition-all flex items-center text-lg py-3 px-4 sm:py-4 rounded-lg hover:bg-black/5"
+                        style={{ color: 'var(--text-primary)' }}
                         aria-label={currentStep === 0 ? 'Go back to welcome screen' : 'Go back to previous question'}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -141,9 +142,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
                     </button>
                     {!isReviewStep && (
                         <div className="text-center animate-slide-in" key={currentStep}>
-                            <h2 className="text-2xl sm:text-3xl font-bold text-[#3E0703] dark:text-slate-100 mb-2 sm:mt-4">{currentQuestion?.prompt}</h2>
+                            <h2 className="text-2xl sm:text-3xl font-bold mb-2 sm:mt-4" style={{ color: 'var(--text-primary)' }}>{currentQuestion?.prompt}</h2>
                             {currentQuestion?.helperText && (
-                                <p className="text-sm mb-6 text-[#660B05]/80 dark:text-slate-400">{currentQuestion.helperText}</p>
+                                <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>{currentQuestion.helperText}</p>
                             )}
 
                             {currentQuestion?.type === 'options' && currentQuestion.options && (
@@ -161,18 +162,24 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
                                                             ? toggleMultiSelect(option.value)
                                                             : onOptionSelect(currentQuestion.key as keyof HangoutParams, option.value)
                                                         }
-                                                        className={`min-h-[44px] px-5 py-3 rounded-lg border-2 text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-100 ${isSelected
-                                                            ? 'bg-[#660B05] dark:bg-[#f3a469] text-white dark:text-slate-900 border-[#660B05] dark:border-[#f3a469]'
-                                                            : 'bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900 border-[#8C1007] dark:border-[#E18C44] hover:bg-[#660B05] dark:hover:bg-[#f3a469]'
-                                                        }`}
+                                                        className="min-h-[44px] px-5 py-3 rounded-lg border-2 text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-100"
+                                                        style={isSelected ? {
+                                                            backgroundColor: 'var(--text-primary)',
+                                                            color: 'var(--bg-surface)',
+                                                            borderColor: 'var(--text-primary)'
+                                                        } : {
+                                                            backgroundColor: 'var(--bg-surface)',
+                                                            color: 'var(--text-primary)',
+                                                            borderColor: 'var(--border-strong)'
+                                                        }}
                                                     >
                                                         {isSelected ? '✓ ' : ''}{option.name}
                                                     </button>
                                                     {currentQuestion.key === 'budget' && (
-                                                        <span className="text-xs text-[#660B05] dark:text-slate-400 mt-1.5 px-2 text-center w-44 h-8">
+                                                        <span className="text-xs mt-1.5 px-2 text-center w-44 h-8" style={{ color: 'var(--text-muted)' }}>
                                                             {option.name === 'Basically Free' ? '(Street food, parks, etc.)' :
-                                                             option.name === 'Mid-Range' ? '(Approx. GH₵80 - GH₵200 pp)' :
-                                                             option.name === 'Feeling Fancy' ? '(Approx. GH₵250+ pp)' : ''}
+                                                                option.name === 'Mid-Range' ? '(Approx. GH₵80 - GH₵200 pp)' :
+                                                                    option.name === 'Feeling Fancy' ? '(Approx. GH₵250+ pp)' : ''}
                                                         </span>
                                                     )}
                                                 </div>
@@ -183,13 +190,14 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
                                     {(currentQuestion.key === 'vibe' || currentQuestion.key === 'timeWindow') && (
                                         <>
                                             <div className="my-6 flex items-center">
-                                                <div className="flex-grow border-t border-[#8C1007]/30 dark:border-slate-600"></div>
-                                                <span className="flex-shrink mx-4 text-[#660B05] dark:text-slate-400 font-semibold">or</span>
-                                                <div className="flex-grow border-t border-[#8C1007]/30 dark:border-slate-600"></div>
+                                                <div className="flex-grow border-t" style={{ borderColor: 'var(--border-soft)' }}></div>
+                                                <span className="flex-shrink mx-4 font-semibold" style={{ color: 'var(--text-muted)' }}>or</span>
+                                                <div className="flex-grow border-t" style={{ borderColor: 'var(--border-soft)' }}></div>
                                             </div>
                                             <button
                                                 onClick={() => onSurpriseMe(currentQuestion.key as keyof HangoutParams, currentQuestion.options!)}
-                                                className="min-h-[44px] px-6 py-4 rounded-lg border-2 text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-100 bg-[#660B05] dark:bg-[#e18b44] text-white dark:text-slate-900 border-[#8C1007] dark:border-[#E18C44] shadow-lg animate-pulse-subtle"
+                                                className="min-h-[44px] px-6 py-4 rounded-lg border-2 text-base font-bold transition-all duration-200 transform hover:scale-105 active:scale-100 shadow-lg animate-pulse-subtle"
+                                                style={{ backgroundColor: 'var(--accent-secondary)', color: '#FFFFFF', borderColor: 'transparent' }}
                                             >
                                                 Surprise Me
                                             </button>
@@ -199,7 +207,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
                                     {currentQuestion.multiSelect && (
                                         <button
                                             onClick={() => onOptionSelect('mustHaves', selectedMustHaves)}
-                                            className="min-h-[44px] mt-6 px-8 py-3 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900"
+                                            className="min-h-[44px] mt-6 px-8 py-3 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105"
+                                            style={{ backgroundColor: 'var(--accent-primary)', color: '#FFFFFF' }}
                                         >
                                             Continue
                                         </button>
@@ -214,7 +223,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
                                             <button
                                                 key={shortcut}
                                                 onClick={() => onOptionSelect('specificDateTime', getDateTimeFromShortcut(shortcut))}
-                                                className="min-h-[44px] px-4 py-2 rounded-full bg-[#8C1007]/10 dark:bg-[#E18C44]/20 text-[#660B05] dark:text-slate-300 border border-[#8C1007]/20 dark:border-[#E18C44]/30 hover:bg-[#8C1007]/20 dark:hover:bg-[#E18C44]/30 font-semibold"
+                                                className="min-h-[44px] px-4 py-2 rounded-full font-semibold border hover:bg-black/5"
+                                                style={{ color: 'var(--text-primary)', borderColor: 'var(--border-strong)' }}
                                             >
                                                 {shortcut}
                                             </button>
@@ -222,121 +232,131 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
                                     </div>
                                     <button
                                         onClick={() => setShowAdvancedTime(prev => !prev)}
-                                        className="text-sm font-semibold text-[#8C1007] dark:text-[#E18C44] underline"
+                                        className="text-sm font-semibold underline"
+                                        style={{ color: 'var(--accent-primary)' }}
                                     >
                                         {showAdvancedTime ? 'Hide exact date & time' : 'Pick exact date & time'}
                                     </button>
                                     {showAdvancedTime && (
-                                      <>
-                                        <div className="flex flex-wrap justify-center gap-4">
-                                            {currentQuestion.type === 'date-and-time' && (
-                                                <input
-                                                    type="date"
-                                                    value={specificDateInput}
-                                                    onChange={(e) => setSpecificDateInput(e.target.value)}
-                                                    className="w-full sm:w-auto px-4 py-3 border-2 border-[#8C1007]/50 dark:border-[#E18C44]/50 bg-transparent dark:bg-slate-700/50 rounded-lg focus:ring-2 focus:ring-[#8C1007] dark:focus:ring-[#E18C44] focus:border-[#8C1007] dark:focus:border-[#E18C44] outline-none transition text-[#3E0703] dark:text-slate-100"
-                                                    style={{ colorScheme: isDarkMode ? 'dark' : 'light' }}
-                                                    min={new Date().toISOString().split('T')[0]}
-                                                />
-                                            )}
-                                            <div className="flex items-center justify-center gap-2 bg-transparent dark:bg-slate-700/50 border-2 border-[#8C1007]/50 dark:border-[#E18C44]/50 rounded-lg p-2 text-xl font-semibold text-[#3E0703] dark:text-slate-100">
-                                                <select value={specificHourInput} onChange={e => setSpecificHourInput(e.target.value)} className="bg-transparent focus:outline-none cursor-pointer" aria-label="Hour">
-                                                    {Array.from({ length: 12 }, (_, i) => i + 1).map(h => <option key={h} value={h} className="bg-[#FFFCF5] dark:bg-slate-800 text-base">{h}</option>)}
-                                                </select>
-                                                <span>:</span>
-                                                <select value={specificMinuteInput} onChange={e => setSpecificMinuteInput(e.target.value)} className="bg-transparent focus:outline-none cursor-pointer" aria-label="Minute">
-                                                    {['00', '15', '30', '45'].map(m => <option key={m} value={m} className="bg-[#FFFCF5] dark:bg-slate-800 text-base">{m}</option>)}
-                                                </select>
-                                                <select value={specificAmPmInput} onChange={e => setSpecificAmPmInput(e.target.value)} className="bg-transparent focus:outline-none cursor-pointer" aria-label="AM or PM">
-                                                    <option value="AM" className="bg-[#FFFCF5] dark:bg-slate-800 text-base">AM</option>
-                                                    <option value="PM" className="bg-[#FFFCF5] dark:bg-slate-800 text-base">PM</option>
-                                                </select>
+                                        <>
+                                            <div className="flex flex-wrap justify-center gap-4">
+                                                {currentQuestion.type === 'date-and-time' && (
+                                                    <input
+                                                        type="date"
+                                                        value={specificDateInput}
+                                                        onChange={(e) => setSpecificDateInput(e.target.value)}
+                                                        className="w-full sm:w-auto px-4 py-3 border-2 rounded-lg outline-none transition"
+                                                        style={{ colorScheme: isDarkMode ? 'dark' : 'light', backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)', borderColor: 'var(--border-soft)' }}
+                                                        min={new Date().toISOString().split('T')[0]}
+                                                    />
+                                                )}
+                                                <div className="flex items-center justify-center gap-2 border-2 rounded-lg p-2 text-xl font-semibold" style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)', borderColor: 'var(--border-soft)' }}>
+                                                    <select value={specificHourInput} onChange={e => setSpecificHourInput(e.target.value)} className="bg-transparent focus:outline-none cursor-pointer" aria-label="Hour">
+                                                        {Array.from({ length: 12 }, (_, i) => i + 1).map(h => <option key={h} value={h} className="text-base" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)' }}>{h}</option>)}
+                                                    </select>
+                                                    <span>:</span>
+                                                    <select value={specificMinuteInput} onChange={e => setSpecificMinuteInput(e.target.value)} className="bg-transparent focus:outline-none cursor-pointer" aria-label="Minute">
+                                                        {['00', '15', '30', '45'].map(m => <option key={m} value={m} className="text-base" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)' }}>{m}</option>)}
+                                                    </select>
+                                                    <select value={specificAmPmInput} onChange={e => setSpecificAmPmInput(e.target.value)} className="bg-transparent focus:outline-none cursor-pointer" aria-label="AM or PM">
+                                                        <option value="AM" className="text-base" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)' }}>AM</option>
+                                                        <option value="PM" className="text-base" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)' }}>PM</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        {previewDateTime && (
-                                          <p className="text-sm text-[#660B05] dark:text-slate-300 font-semibold">
-                                            Planning for: {previewDateTime}
-                                          </p>
-                                        )}
-                                        <button
-                                            onClick={handleInternalSpecificTimeSubmit}
-                                            disabled={currentQuestion.type === 'date-and-time' && !specificDateInput}
-                                            className="min-h-[44px] px-8 mt-2 py-3 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900 border-[#8C1007] dark:border-[#E18C44] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                                        >
-                                            Continue
-                                        </button>
-                                      </>
+                                            {previewDateTime && (
+                                                <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                                                    Planning for: {previewDateTime}
+                                                </p>
+                                            )}
+                                            <button
+                                                onClick={handleInternalSpecificTimeSubmit}
+                                                disabled={currentQuestion.type === 'date-and-time' && !specificDateInput}
+                                                className="min-h-[44px] px-8 mt-4 py-3 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                                style={{ backgroundColor: 'var(--accent-primary)', color: '#FFFFFF' }}
+                                            >
+                                                Continue
+                                            </button>
+                                        </>
                                     )}
                                 </div>
                             )}
 
                             {currentQuestion?.type === 'number' && (
-                               <div className="flex flex-col items-center gap-4">
+                                <div className="flex flex-col items-center gap-4">
                                     <input
                                         type="number"
                                         value={groupSizeInput}
                                         onChange={(e) => setGroupSizeInput(e.target.value)}
                                         min="2"
                                         placeholder="e.g., 4"
-                                        className="w-32 px-4 py-3 text-center border-2 border-[#8C1007]/50 dark:border-[#E18C44]/50 bg-transparent dark:bg-slate-700/50 rounded-lg focus:ring-2 focus:ring-[#8C1007] dark:focus:ring-[#E18C44] focus:border-[#8C1007] dark:focus:border-[#E18C44] outline-none transition text-[#3E0703] dark:text-slate-100 text-2xl font-bold"
+                                        className="w-32 px-4 py-3 text-center border-2 rounded-lg outline-none transition text-2xl font-bold"
+                                        style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)', borderColor: 'var(--border-soft)' }}
                                     />
                                     <button
                                         onClick={() => onOptionSelect('groupSize', parseInt(groupSizeInput, 10))}
                                         disabled={!groupSizeInput || parseInt(groupSizeInput, 10) < 2}
-                                        className="min-h-[44px] px-8 mt-2 py-3 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900 border-[#8C1007] dark:border-[#E18C44] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="min-h-[44px] px-8 mt-4 py-3 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                        style={{ backgroundColor: 'var(--accent-primary)', color: '#FFFFFF' }}
                                     >
                                         Continue
                                     </button>
-                               </div>
+                                </div>
                             )}
-                        </div>
+                        </div >
                     )}
 
                     {isReviewStep && (
                         <div className="animate-slide-in">
-                            <h2 className="text-2xl sm:text-3xl font-bold text-[#3E0703] dark:text-slate-100 mb-3 sm:mt-4 text-center">Review Your Vibe</h2>
-                            <p className="text-center text-[#660B05] dark:text-slate-300 mb-6">You can edit any answer before generating.</p>
-                            <div className="flex items-center justify-between mb-4 p-3 rounded-lg bg-[#8C1007]/10 dark:bg-[#E18C44]/10">
-                              <span className="font-semibold text-[#3E0703] dark:text-slate-100">Open now only</span>
-                              <button
-                                onClick={() => onOptionSelect('openNowOnly', !params.openNowOnly)}
-                                className={`px-3 py-1 rounded-full text-xs font-bold ${params.openNowOnly ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' : 'bg-white text-[#660B05] dark:bg-slate-700 dark:text-slate-300'}`}
-                              >
-                                {params.openNowOnly ? 'ON' : 'OFF'}
-                              </button>
+                            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mt-4 text-center" style={{ color: 'var(--text-primary)' }}>Review Your Vibe</h2>
+                            <p className="text-center mb-6" style={{ color: 'var(--text-secondary)' }}>You can edit any answer before generating.</p>
+                            <div className="flex items-center justify-between mb-4 p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-soft)' }}>
+                                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>Open now only</span>
+                                <button
+                                    onClick={() => onOptionSelect('openNowOnly', !params.openNowOnly)}
+                                    className="px-3 py-1 rounded-full text-xs font-bold transition-colors"
+                                    style={params.openNowOnly ? { backgroundColor: 'var(--success)', color: '#FFFFFF' } : { backgroundColor: 'var(--border-strong)', color: 'var(--text-primary)' }}
+                                >
+                                    {params.openNowOnly ? 'ON' : 'OFF'}
+                                </button>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                                 {reviewSummary.map(({ key, label, value }) => {
                                     const targetStep = questions.findIndex(q => q.key === key);
                                     return (
-                                      <div key={label} className="bg-white/80 dark:bg-slate-700/60 rounded-lg p-3 border border-[#8C1007]/10 dark:border-slate-600">
-                                          <div className="flex items-center justify-between gap-2">
-                                            <p className="text-xs font-bold text-[#660B05]/80 dark:text-slate-400 uppercase">{label}</p>
-                                            {targetStep >= 0 && (
-                                              <button
-                                                onClick={() => onJumpToStep(targetStep)}
-                                                className="text-xs font-semibold underline text-[#8C1007] dark:text-[#E18C44]"
-                                              >
-                                                Edit
-                                              </button>
-                                            )}
-                                          </div>
-                                          <p className="text-sm font-semibold text-[#3E0703] dark:text-slate-100">{value}</p>
-                                      </div>
+                                        <div key={label} className="rounded-lg p-3 border" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border-soft)' }}>
+                                            <div className="flex items-center justify-between gap-2">
+                                                <p className="text-xs font-bold uppercase" style={{ color: 'var(--text-muted)' }}>{label}</p>
+                                                {targetStep >= 0 && (
+                                                    <button
+                                                        onClick={() => onJumpToStep(targetStep)}
+                                                        className="text-xs font-semibold underline"
+                                                        style={{ color: 'var(--accent-primary)' }}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                )}
+                                            </div>
+                                            <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{value}</p>
+                                        </div>
                                     );
                                 })}
                             </div>
-                            <button
-                                onClick={() => handleSubmit(params)}
-                                className="min-h-[44px] w-full px-8 py-4 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-[1.01] bg-[#8C1007] dark:bg-[#E18C44] text-white dark:text-slate-900 shadow-lg"
-                            >
-                                Generate My Plan
-                            </button>
+                            <div className="sticky bottom-0 mt-6 pt-3" style={{ backgroundColor: 'var(--bg-surface)' }}>
+                                <p className="text-xs mb-2 text-center" style={{ color: 'var(--text-muted)' }}>Ready in under 20 seconds</p>
+                                <button
+                                    onClick={() => handleSubmit(params)}
+                                    className="min-h-[44px] w-full px-8 py-4 rounded-lg text-lg font-bold transition-all duration-300 transform hover:scale-[1.01] shadow-lg animate-pulse-subtle"
+                                    style={{ backgroundColor: 'var(--accent-primary)', color: '#FFFFFF' }}
+                                >
+                                    Generate My Plan
+                                </button>
+                            </div>
                         </div>
                     )}
-                </div>
-            </div>
-        </div>
+                </div >
+            </div >
+        </div >
     );
 };
 

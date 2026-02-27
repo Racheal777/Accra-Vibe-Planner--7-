@@ -23,9 +23,9 @@ export const BILLING = {
 } as const;
 
 export const RATE_LIMIT = {
-  freePlanCooldownMs: 24 * 60 * 60 * 1000,
+  freePlanCooldownMs: 60 * 1000
 } as const;
 
 export const AI = {
-  model: 'gemini-2.5-pro',
+  model: 'gemini-2.5-flash',
 } as const;
