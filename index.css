@@ -8,12 +8,12 @@
   --text-muted: #9CA3AF;
   --border-soft: #F3F4F6;
   --border-strong: #E5E7EB;
-  
+
   /* Primary Action */
   --accent-primary: #F97316;
   --accent-primary-hover: #EA580C;
   --accent-secondary: #0F766E;
-  
+
   /* Status */
   --success: #15803D;
   --warning: #B45309;
@@ -39,7 +39,7 @@
   --text-muted: #6B7280;
   --border-soft: #2A2F3A;
   --border-strong: #3F4656;
-  
+
   --accent-primary: #F97316;
   --accent-primary-hover: #FB923C;
   --accent-secondary: #2DD4BF;
@@ -55,7 +55,12 @@ body {
   color: var(--text-primary);
 }
 
-h1, h2, h3, h4, h5, h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 button {
   font-family: 'Outfit', sans-serif;
   letter-spacing: -0.01em;
@@ -100,7 +105,9 @@ button {
 }
 
 @keyframes progress-animation {
-  from { width: 0%; }
+  from {
+    width: 0%;
+  }
 }
 
 .animate-slide-in {
@@ -108,8 +115,45 @@ button {
 }
 
 @keyframes slide-in-animation {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-pulse-subtle {
@@ -117,80 +161,183 @@ button {
 }
 
 @keyframes pulse-subtle {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 @keyframes confetti-fall {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 @keyframes drive-across {
-  from { transform: translateX(-160px); }
-  to { transform: translateX(100vw); }
+  from {
+    transform: translateX(-160px);
+  }
+
+  to {
+    transform: translateX(100vw);
+  }
 }
 
 @keyframes landing-drive {
-  from { transform: translateX(-240px); }
-  to { transform: translateX(100vw); }
+  from {
+    transform: translateX(-240px);
+  }
+
+  to {
+    transform: translateX(100vw);
+  }
 }
 
 @keyframes motorbike-drive {
-  from { transform: translateX(-200px); }
-  to { transform: translateX(100vw); }
+  from {
+    transform: translateX(-200px);
+  }
+
+  to {
+    transform: translateX(100vw);
+  }
 }
 
 @keyframes trotro-bounce {
-  0%, 100% { transform: translateY(0) rotate(0.2deg); }
-  20% { transform: translateY(-9px) rotate(-1deg); }
-  45% { transform: translateY(3px) rotate(0.6deg); }
-  75% { transform: translateY(-5px) rotate(-0.5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0.2deg);
+  }
+
+  20% {
+    transform: translateY(-9px) rotate(-1deg);
+  }
+
+  45% {
+    transform: translateY(3px) rotate(0.6deg);
+  }
+
+  75% {
+    transform: translateY(-5px) rotate(-0.5deg);
+  }
 }
 
 @keyframes car-wiggle {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-2px) rotate(0.5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-2px) rotate(0.5deg);
+  }
 }
 
 @keyframes okada-rush {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-3px) rotate(2deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(2deg);
+  }
 }
 
 @keyframes walk-cycle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 @keyframes walk-leg-1 {
-  0%, 100% { transform: rotate(-20deg); }
-  50% { transform: rotate(25deg); }
+
+  0%,
+  100% {
+    transform: rotate(-20deg);
+  }
+
+  50% {
+    transform: rotate(25deg);
+  }
 }
 
 @keyframes walk-leg-2 {
-  0%, 100% { transform: rotate(25deg); }
-  50% { transform: rotate(-20deg); }
+
+  0%,
+  100% {
+    transform: rotate(25deg);
+  }
+
+  50% {
+    transform: rotate(-20deg);
+  }
 }
 
 @keyframes walk-arm-1 {
-  0%, 100% { transform: rotate(15deg); }
-  50% { transform: rotate(-10deg); }
+
+  0%,
+  100% {
+    transform: rotate(15deg);
+  }
+
+  50% {
+    transform: rotate(-10deg);
+  }
 }
 
 @keyframes walk-arm-2 {
-  0%, 100% { transform: rotate(-10deg); }
-  50% { transform: rotate(15deg); }
+
+  0%,
+  100% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(15deg);
+  }
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(-20deg); }
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-20deg);
+  }
 }
 
 .capturing {
@@ -198,7 +345,7 @@ button {
   background-color: var(--bg-canvas) !important;
 }
 
-.capturing > div {
+.capturing>div {
   background-color: var(--bg-surface) !important;
   box-shadow: var(--shadow-sm) !important;
   border: 1px solid var(--border-soft) !important;
