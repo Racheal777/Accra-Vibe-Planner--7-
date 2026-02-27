@@ -5,7 +5,7 @@ const ConfettiPiece: React.FC<{ style: React.CSSProperties }> = ({ style }) => (
 );
 
 const Confetti: React.FC = () => {
-  const colors = ['#8C1007', '#660B05', '#E18C44'];
+  const colors = ['#f3b806ff', '#08bbdfff', '#12dd48ff'];
   const confettiCount = 50;
 
   const confetti = Array.from({ length: confettiCount }).map((_, index) => {
